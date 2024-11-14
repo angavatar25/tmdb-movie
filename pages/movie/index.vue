@@ -8,7 +8,10 @@
       <div>
         <MovieFilter
           :genre-list="movieGenres"
+          :current-sort="currentSort"
+          :current-sort-id="currentSortId"
           @input="loadMoviesWithGenre"
+          @handleCurrentSortOption="handleSort"
           v-model="genreOptions"
         />
         <button @click="checkGenre">Check</button>
@@ -52,6 +55,8 @@ export default {
       currentPage: 1,
       selectedOption: '',
       genreOptions: [],
+      currentSort: '',
+      currentSortId: '',
     }
   },
   mounted() {
@@ -92,6 +97,10 @@ export default {
         Object.assign(payload, { with_genres: this.checkGenre() });
       }
 
+      if (this.currentSort) {
+        Object.assign(payload, { sort_by: this.currentSortId })
+      }
+
       this.$store.dispatch('movies/filteredMovie', payload);
     },
     loadMoviesWithGenre() {
@@ -103,6 +112,10 @@ export default {
         Object.assign(payload, { with_genres: this.checkGenre() });
       }
 
+      if (this.currentSort) {
+        Object.assign(payload, { sort_by: this.currentSortId })
+      }
+
       this.$store.dispatch('movies/filteredMovie', payload);
     },
     checkGenre() {
@@ -110,6 +123,16 @@ export default {
 
       return joined;
     },
+    handleSort(sort) {
+      const { key, name } = sort;
+      
+      this.currentSort = name;
+      this.currentSortId = key;
+
+      this.currentPage = 1;
+
+      this.loadMoviesWithGenre();
+    }
   }
 }
 </script>

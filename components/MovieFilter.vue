@@ -3,16 +3,33 @@
     <p class="px-4 pb-4 text-[16px] font-semibold">Sort Result By</p>
     <div class="w-full h-[1px] bg-gray-500"/>
     <div class="p-4">
-      <select
-        class="text-white w-full bg-black"
-        name="cars"
-        id="cars"
-      >
-        <option value="volvo">Volvo</option>
-        <option value="saab">Saab</option>
-        <option value="mercedes">Mercedes</option>
-        <option value="audi">Audi</option>
-      </select>
+      <div class="relative">
+        <div
+          @click="handleSortByDropdown"
+          class="w-full bg-[#2F363F] p-3 rounded-md flex justify-between"
+        >
+          <p>{{ currentSort ? currentSort : 'Popularity' }}</p>
+          <img
+            :class="{
+              'rotate-180': showSortByDropdown,
+            }"
+            src="../src/assets/icons/polygon-1.svg"
+            alt=""
+          >
+        </div>
+        <div
+          v-if="showSortByDropdown"
+          class="bg-[#111419] absolute w-full p-3 rounded-md flex flex-col gap-4"
+        >
+          <p
+            v-for="sort in sortOptions"
+            :key="`sort-${sort.id}`"
+            @click="handleCurrentSortOption(sort)"
+          >
+            {{ sort.name }}
+          </p>
+        </div>
+      </div>
     </div>
     <div class="w-full h-[1px] bg-gray-500"/>
     <p class="p-4 text-[16px] font-semibold">Genres</p>
@@ -30,7 +47,7 @@
             type="checkbox"
             :name="genre.name"
             :value="genre.id"
-            @click="$emit('handleChangeGenre', genre.id)"
+            @click="$emit('handleChangeGenre', genre)"
           >
         </div>
       </div>
@@ -49,6 +66,51 @@ export default {
       type: Array,
       default: () => [],
     },
+    currentSort: {
+      type: String,
+      default: '',
+    },
+    currentSortId: {
+      type: String,
+      default: '',
+    },
+  },
+  data() {
+    return {
+      showSortByDropdown: false,
+      sortOptions: [
+        {
+          id: 1,
+          key: 'popularity.asc',
+          name: 'Popularity Ascending'
+        },
+        {
+          id: 2,
+          key: 'popularity.desc',
+          name: 'Popularity Descending'
+        },
+        {
+          id: 3,
+          key: 'primary_release_date.asc',
+          name: 'Release Date Ascending'
+        },
+        {
+          id: 4,
+          key: 'primary_release_date.desc',
+          name: 'Release Date Descending'
+        },
+        {
+          id: 5,
+          key: 'vote_average.asc',
+          name: 'Rating Ascending'
+        },
+        {
+          id: 6,
+          key: 'vote_average.desc',
+          name: 'Rating Descending'
+        },
+      ]
+    }
   },
   computed: {
     computedValue: {
@@ -58,6 +120,16 @@ export default {
       set(newValue) {
         this.$emit('input', newValue);
       }
+    }
+  },
+  methods: {
+    handleSortByDropdown() {
+      this.showSortByDropdown = !this.showSortByDropdown;
+    },
+    handleCurrentSortOption(curr) {
+      this.$emit('handleCurrentSortOption', curr);
+
+      this.showSortByDropdown = false;
     }
   }
 }
