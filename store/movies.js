@@ -97,7 +97,7 @@ export const actions = {
     commit('SET_LOADING', true);
 
     try {
-      const { with_genres, page, sort_by } = payload;
+      const { page } = payload;
 
       const res = await this.$axios.get('/3/discover/movie', {
         params: payload,
@@ -117,5 +117,19 @@ export const actions = {
     } finally {
       commit('SET_LOADING', false);
     }
-  }
+  },
+  async getMoviesByPopularity({ commit }) {
+    const res = await this.$axios.get('/3/movie/popular')
+
+    if (res && res.data && res.data.results) {
+      commit('SET_DISCOVER_MOVIE_LIST', res.data.results);
+    }
+  },
+  async getMoviesByReleaseData({ commit }) {
+    const res = await this.$axios.get('/3/movie/upcoming')
+
+    if (res && res.data && res.data.results) {
+      commit('SET_DISCOVER_MOVIE_LIST', res.data.results);
+    }
+  },
 }

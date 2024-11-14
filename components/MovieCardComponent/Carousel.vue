@@ -76,56 +76,33 @@ export default {
 
 <style scoped>
 .carousel-container {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  width: 100%;
+  @apply relative flex items-center justify-center overflow-hidden w-full;
 }
 
 .carousel-wrapper {
-  display: flex;
+  @apply flex w-full;
   transition: transform 0.5s ease-in-out;
-  width: 100%;
   padding: 0 100px 100px 100px;
 }
 
 .carousel-item {
-  max-width: 600px; /* Set width of each item */
-  width: 100%;
-  color: white;
-  font-size: 1.5rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0 10px; /* Gap between items */
-  flex-shrink: 0;
-  transition: transform 0.5s, opacity 0.5s;
-  opacity: 0.5;
+  @apply max-w-[600px] w-full opacity-50 text-white text-2xl flex justify-center items-center shrink-0;
+  margin: 0 10px;
 }
 
 .carousel-item.active {
-  transform: scale(1.1); /* Scale the active item */
-  opacity: 1;
+  @apply opacity-100;
+  transform: scale(1.1);
 }
 
 .carousel-dots {
-  @apply bottom-0;
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  width: 100%;
+  @apply bottom-0 absolute flex justify-center w-full;
 }
 
 .carousel-dots span {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
+  @apply inline-block w-3 h-3 bg-gray-500 cursor-pointer;
   margin: 0 5px;
   border-radius: 100%;
-  background-color: gray;
-  cursor: pointer;
 }
 
 .carousel-dots .active {
