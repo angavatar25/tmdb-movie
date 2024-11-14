@@ -3,6 +3,7 @@ const initialState = () => ({
   movieDetail: {},
   movieReviews: {},
   movieGenres: [],
+  movieSearchRes: [],
 });
 
 export const state = initialState;
@@ -19,7 +20,19 @@ export const mutations = {
   },
   SET_MOVIE_GENRES(state, data) {
     state.movieGenres = data;
-  }
+  },
+  SET_MOVIE_SEARCH_RES(state, data) {
+    const serializedSearchData = data.map((res) => {
+      const { title, id } = res;
+
+      return {
+        movieId: id,
+        movieName: title,
+      }
+    });
+
+    state.movieSearchRes = serializedSearchData.slice(0, 10);
+  },
 }
 
 export const actions = {
@@ -51,6 +64,17 @@ export const actions = {
 
     if (res && res.data && res.data.genres) {
       commit('SET_MOVIE_GENRES', res.data.genres);
+    }
+  },
+  async getMovieSearch({ commit }, searchQuery) {
+    const res = await this.$axios.get('3/search/movie', { 
+      params: {
+        query: searchQuery
+      },
+    });
+
+    if (res && res.data && res.data.results) {
+      commit('SET_MOVIE_SEARCH_RES', res.data.results);
     }
   }
 }

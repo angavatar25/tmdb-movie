@@ -1,5 +1,8 @@
 <template>
-  <div class="bg-[#F9F9F9] text-black p-4 rounded-md shadow-md">
+  <div
+    v-if="movieReview"
+    class="bg-[#F9F9F9] text-black p-4 rounded-md shadow-md"
+  >
     <div class="flex justify-between">
       <div class="flex gap-5">
         <div class="w-7 h-7 bg-gray-300 rounded-full my-auto overflow-hidden">
@@ -14,9 +17,18 @@
           <p>{{ movieReview.created_at }}</p>
         </div>
       </div>
-      <div class="bg-gray-300 h-fit flex p-2 rounded-md">
+      <div
+        v-if="movieRate"
+        class="bg-gray-300 h-fit flex p-2 rounded-md"
+      >
         <img class="w-5" src="../src/assets/icons/star.svg" alt="">
         <p class="text-4xl font-bold">{{ movieRate }}</p>
+      </div>
+      <div
+        v-else
+        class="bg-gray-300 h-fit flex p-2 rounded-md font-bold"
+      >
+        No rating
       </div>
     </div>
     <p v-html="movieReview.content" class=" italic text-[13px] mt-5"/>
@@ -33,10 +45,15 @@ export default {
   },
   computed: {
     movieRate() {
-      if (this.movieReview && this.movieReview.author_details) {
+      if (this.movieReview 
+        && this.movieReview.author_details
+        && this.movieReview.author_details.rating
+      ) {
         const parsed = parseFloat(this.movieReview.author_details.rating.toFixed(1))
         return parsed;
       }
+
+      return null;
     },
     imageAvatar() {
       const posterPath = "https://image.tmdb.org/t/p/original";

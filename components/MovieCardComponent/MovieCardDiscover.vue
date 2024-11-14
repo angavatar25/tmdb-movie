@@ -6,7 +6,7 @@
     <img
       :src="imagePosterPath"
       alt=""
-      @click="$emit('movie-card-action', movieDetail.id)"
+      @click="$emit('movie-card-action', { movieId: movieDetail.id, movieName: movieDetail.original_title })"
     >
     <div class="mt-2">
       <p class="font-semibold">{{ movieDetail.original_title }}</p>

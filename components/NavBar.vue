@@ -53,6 +53,6 @@ export default {
 
 <style scoped>
 .navbar {
-  @apply bg-[#292E36] flex px-10 py-4 justify-between;
+  @apply bg-[#292E36] flex px-10 py-4 justify-between fixed w-full top-0 z-20;
 }
 </style>
