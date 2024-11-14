@@ -64,12 +64,21 @@ export default {
       page: this.currentPage,
     };
 
+    if (this.genreId) {
+      this.genreOptions.push(this.genreId);
+
+      this.loadMoviesWithGenre();
+    }
+
     this.$store.dispatch('movies/getMovieGenre');
     this.$store.dispatch('movies/filteredMovie', payload);
   },
   computed: {
     movieList() {
       return this.$store.state.movies.movieListFiltered;
+    },
+    genreId() {
+      return this.$route.query.genreId;
     },
     movieGenres() {
       return this.$store.state.movies.movieGenres;
@@ -94,7 +103,7 @@ export default {
       };
 
       if (this.genreOptions.length > 0) {
-        Object.assign(payload, { with_genres: this.checkGenre() });
+        Object.assign(payload, { with_genres: this.checkGenre(this.genreOptions) });
       }
 
       if (this.currentSort) {
@@ -109,7 +118,7 @@ export default {
       };
 
       if (this.genreOptions.length > 0) {
-        Object.assign(payload, { with_genres: this.checkGenre() });
+        Object.assign(payload, { with_genres: this.checkGenre(this.genreOptions) });
       }
 
       if (this.currentSort) {
@@ -118,8 +127,8 @@ export default {
 
       this.$store.dispatch('movies/filteredMovie', payload);
     },
-    checkGenre() {
-      const joined = this.genreOptions.join(',');
+    checkGenre(genre) {
+      const joined = genre.join(',');
 
       return joined;
     },
