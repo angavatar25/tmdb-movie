@@ -17,7 +17,7 @@
             v-for="genre in movieGenre"
             :key="genre.id"
             class="text-xs"
-            @click="goToMovieList(genre.id)"
+            @click="goToMovieListWithGenre(genre.id)"
           >
             {{ genre.name }}
           </p>
@@ -45,7 +45,7 @@ export default {
     goToHomepage() {
       this.$router.push('/');
     },
-    goToMovieList(genreId) {
+    goToMovieListWithGenre(genreId) {
       this.$router.push({ path: '/movie', query: { genreId } })
     }
   },

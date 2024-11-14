@@ -1,7 +1,9 @@
 <template>
   <div>
-    <section class="bg-[#1E232B] p-10">
-      <MovieCardCarousel/>
+    <section class="bg-[#1E232B] px-10 pt-10 pb-20">
+       <Carousel
+        :movie-list="carouselMovieList"
+       />
     </section>
     <section class="bg-[#292E36] p-10 text-white">
       <div class="flex justify-between">
@@ -22,7 +24,10 @@
           </button>
         </div>
       </div>
-      <div class="mt-10 grid grid-cols-5 gap-5">
+      <div
+        v-if="movieList.length > 0"
+        class="mt-10 grid grid-cols-5 gap-5"
+      >
         <MovieCardDiscover
           v-for="movie in movieList"
           :key="movie.id"
@@ -30,11 +35,15 @@
           @movie-card-action="redirectToMovieDetail"
         />
       </div>
+      <div v-else>
+        <p>Loading Movies...</p>
+      </div>
     </section>
   </div>
 </template>
 
 <script>
+import Carousel from '../components/MovieCardComponent/Carousel.vue';
 import MovieCardCarousel from '../components/MovieCardComponent/MovieCardCarousel.vue';
 import MovieCardDiscover from '../components/MovieCardComponent/MovieCardDiscover.vue';
 
@@ -42,6 +51,7 @@ export default {
   name: 'IndexPage',
   components: {
     MovieCardCarousel,
+    Carousel,
   },
   data() {
     return {
@@ -55,7 +65,10 @@ export default {
   computed: {
     movieList() {
       return this.$store.state.movies.discoverMovieList;
-    }
+    },
+    carouselMovieList() {
+      return this.$store.state.movies.discoverMovieList.slice(0, 5);
+    },
   },
   methods: {
     redirectToMovieDetail(movieData) {
