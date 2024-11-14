@@ -2,29 +2,81 @@
   <div v-if="movieDetail">
     <section class="max-h-[450px] bg-opacity-45 bg-black relative overflow-hidden text-white">
       <div class="absolute bottom-0 w-full">
-        <div class="bg-black h-20 w-full"/>
-      </div>
-      <img
-        :src="backdropPath"
-        alt=""
-      >
-    </section>
-    <div class="absolute top-[20.5rem]">
-      <div class="flex px-10">
-        <img
-          :src="imagePosterPath"
-          alt=""
-          class="max-w-56 shadow-md"
-        >
-        <div class="flex flex-col justify-between pl-5">
-          <div>
+        <div class="w-full grid grid-cols-5 px-10">
+          <div class="col-span-1"/>
+          <div class="col-span-4 mb-6">
             <p class="text-lg">{{ movieYear }}</p>
             <p class="text-4xl">{{ movieDetail.title }}</p>
             <p class="text-sm">
               {{ movieGenre }}
             </p>
           </div>
-          <div class="flex gap-5">
+        </div>
+        <div class="bg-black h-20 w-full grid grid-cols-5 px-10">
+          <div class="col-span-1"/>
+          <div class="flex col-span-4 py-5">
+            <div class="flex gap-5 border-r-[1px] border-gray-300 pr-10">
+              <div class="h-fit flex gap-3 my-auto">
+                <img class="w-5" src="../../../src/assets/icons/star2.svg" alt="">
+                <p class="text-4xl font-bold">{{ voteAverage }}</p>
+              </div>
+              <div class="text-xs my-auto">
+                <p class="uppercase">User Score</p>
+                <p class="uppercase">{{ `${movieDetail.vote_count} votes` }}</p>
+              </div>
+            </div>
+            <div class="text-xs flex flex-col justify-center border-r-[1px] border-gray-300 px-10">
+              <p class="uppercase">Status</p>
+              <p class="uppercase">{{ movieDetail.status }}</p>
+            </div>
+            <div class="text-xs flex flex-col justify-center border-r-[1px] border-gray-300 px-10">
+              <p class="uppercase">Language</p>
+              <p class="uppercase">{{ movieLang }}</p>
+            </div>
+            <div class="text-xs flex flex-col justify-center border-r-[1px] border-gray-300 px-10">
+              <p class="uppercase">Budget</p>
+              <p class="uppercase">{{ movieDetail.budget }}</p>
+            </div>
+            <div class="text-xs flex flex-col justify-center border-r-[1px] border-gray-300 px-10">
+              <p class="uppercase">Production</p>
+              <p class="uppercase">{{ movieProductionCompany }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <img
+        :src="backdropPath"
+        alt=""
+      >
+    </section>
+    <div class="bg-white">
+      <div>
+        <div class="grid grid-cols-5 px-10 relative">
+          <div class="col-span-1">
+            <img
+              :src="imagePosterPath"
+              alt=""
+              class="max-w-56 shadow-md absolute bottom-0"
+            >
+          </div>
+          <div class="col-span-4 mt-5 leading-[10]">
+            <div>
+              <p class=" text-red-600 uppercase text-sm font-semibold">Overview</p>
+              <p class="text-black leading-6 mt-2 max-w-[526px] text-sm">
+                {{ movieDetail.overview }}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-col justify-between pl-5">
+          <!-- <div>
+            <p class="text-lg">{{ movieYear }}</p>
+            <p class="text-4xl">{{ movieDetail.title }}</p>
+            <p class="text-sm">
+              {{ movieGenre }}
+            </p>
+          </div> -->
+          <!-- <div class="flex gap-5">
             <div class="flex gap-5">
               <div class="h-fit flex gap-3 my-auto">
                 <img class="w-5" src="../../../src/assets/icons/star2.svg" alt="">
@@ -55,15 +107,7 @@
               <p class="uppercase">Production</p>
               <p class="uppercase">{{ movieProductionCompany }}</p>
             </div>
-          </div>
-          <div class="leading-[10]">
-            <div>
-              <p class=" text-red-600 uppercase text-sm font-semibold">Overview</p>
-              <p class="text-black leading-6 mt-2 max-w-[526px] text-sm">
-                {{ movieDetail.overview }}
-              </p>
-            </div>
-          </div>
+          </div> -->
         </div>
       </div>
       <div class="mt-10 px-10">

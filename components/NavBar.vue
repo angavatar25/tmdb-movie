@@ -1,6 +1,10 @@
 <template>
   <nav class="navbar">
-    <img src="../src/assets/images/MoovieTime-Logo.svg" alt="">
+    <img
+      @click="goToHomepage"
+      src="../src/assets/images/MoovieTime-Logo.svg"
+      alt=""
+    >
     <InputMovieSearch/>
     <div class="uppercase flex gap-10 text-white my-auto">
       <div class="relative group">
@@ -36,6 +40,9 @@ export default {
   methods: {
     goToMovieList() {
       this.$router.push('/movie');
+    },
+    goToHomepage() {
+      this.$router.push('/');
     }
   },
   mounted() {

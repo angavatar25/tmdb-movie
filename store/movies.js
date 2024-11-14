@@ -4,6 +4,9 @@ const initialState = () => ({
   movieReviews: {},
   movieGenres: [],
   movieSearchRes: [],
+  movieListFiltered: [],
+  moreDataLoading: false,
+  filterWithGenre: false,
 });
 
 export const state = initialState;
@@ -33,6 +36,13 @@ export const mutations = {
 
     state.movieSearchRes = serializedSearchData.slice(0, 10);
   },
+  SET_MOVIE_LIST_FILTERED(state, newMovies) {
+    state.movieListFiltered = [...state.movieListFiltered, ...newMovies];
+  },
+  SET_LOADING(state, data) {
+    state.moreDataLoading = data;
+  },
+  SET_
 }
 
 export const actions = {
@@ -67,7 +77,7 @@ export const actions = {
     }
   },
   async getMovieSearch({ commit }, searchQuery) {
-    const res = await this.$axios.get('3/search/movie', { 
+    const res = await this.$axios.get('/3/search/movie', { 
       params: {
         query: searchQuery
       },
@@ -75,6 +85,25 @@ export const actions = {
 
     if (res && res.data && res.data.results) {
       commit('SET_MOVIE_SEARCH_RES', res.data.results);
+    }
+  },
+  async filteredMovie({ commit }, payload) {
+    commit('SET_LOADING', true);
+
+    try {
+      const { with_genres } = payload;
+
+      const res = await this.$axios.get('/3/discover/movie', {
+        params: payload,
+      });
+  
+      if (res && res.data && res.data.results) {
+        commit('SET_MOVIE_LIST_FILTERED', res.data.results);
+      }
+    } catch (err) {
+      // Do nothing
+    } finally {
+      commit('SET_LOADING', false);
     }
   }
 }

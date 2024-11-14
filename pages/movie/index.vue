@@ -8,7 +8,10 @@
       <div>
         <MovieFilter
           :genre-list="movieGenres"
+          @input="loadMovies"
+          v-model="genreOptions"
         />
+        <button @click="checkGenre">Check</button>
       </div>
       <div class="grid grid-cols-4 col-span-4 gap-5">
         <MovieCardDiscover
@@ -24,9 +27,11 @@
       </div>
       <div class="col-span-4 gap-5 text-center">
         <button
+          :disabled="loadingMoreData"
+          @click="loadMovies"
           class="bg-red-600 capitalize rounded-full px-5 py-1"
         >
-          Load more
+          {{ loadingMoreData ? 'Loading...' : 'Load more data' }}
         </button>
       </div>
     </div>
@@ -42,20 +47,27 @@ export default {
     MovieCardDiscover,
     MovieFilter,
   },
-  mounted() {
-    if (this.movieList.length === 0) {
-      this.$store.dispatch('movies/getDiscoverMovieList');
+  data() {
+    return {
+      currentPage: 1,
+      selectedOption: '',
+      genreOptions: [],
     }
-
+  },
+  mounted() {
     this.$store.dispatch('movies/getMovieGenre');
+    this.$store.dispatch('movies/filteredMovie');
   },
   computed: {
     movieList() {
-      return this.$store.state.movies.discoverMovieList;
+      return this.$store.state.movies.movieListFiltered;
     },
     movieGenres() {
       return this.$store.state.movies.movieGenres;
-    }
+    },
+    loadingMoreData() {
+      return this.$store.state.movies.moreDataLoading;
+    },
   },
   methods: {
     redirectToMovieDetail(movieData) {
@@ -64,7 +76,25 @@ export default {
       const movieNameSerialized = splitted.join('-');
 
       this.$router.push({ path: `/movie/${movieNameSerialized}`, query: { movieId } });
-    }
+    },
+    loadMovies() {
+      this.currentPage += 1;
+
+      const payload = {
+        page: this.currentPage,
+      };
+
+      if (this.genreOptions.length > 0) {
+        Object.assign(payload, { with_genres: this.checkGenre() });
+      }
+
+      this.$store.dispatch('movies/filteredMovie', payload);
+    },
+    checkGenre() {
+      const joined = this.genreOptions.join(',');
+
+      return joined;
+    },
   }
 }
 </script>
