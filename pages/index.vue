@@ -27,6 +27,7 @@
           v-for="movie in movieList"
           :key="movie.id"
           :movie-detail="movie"
+          @movie-card-action="redirectToMovieDetail"
         />
       </div>
     </section>
@@ -54,6 +55,11 @@ export default {
   computed: {
     movieList() {
       return this.$store.state.movies.discoverMovieList;
+    }
+  },
+  methods: {
+    redirectToMovieDetail(movieId) {
+      this.$router.push({ path: `/movie/${movieId}`, query: { movieId } });
     }
   }
 }

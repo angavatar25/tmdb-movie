@@ -1,6 +1,6 @@
 <template>
   <div class="bg-[#101925] py-3 rounded-md">
-    <p class="px-4 pb-4">Sort Result By</p>
+    <p class="px-4 pb-4 text-[16px] font-semibold">Sort Result By</p>
     <div class="w-full h-[1px] bg-gray-500"/>
     <div class="p-4">
       <select
@@ -15,15 +15,16 @@
       </select>
     </div>
     <div class="w-full h-[1px] bg-gray-500"/>
-    <p class="p-4">Genres</p>
+    <p class="p-4 text-[16px] font-semibold">Genres</p>
     <div class="w-full h-[1px] bg-gray-500"/>
     <div class="p-4">
-      <div class="flex justify-between">
+      <div class="">
         <div
           v-for="genre in genreList"
           :key="genre.id"
+          class="flex justify-between mb-3"
         >
-          <label for="vehicle1">{{ genre.name }}</label>
+          <label :for="genre.name">{{ genre.name }}</label>
           <input
             type="checkbox"
             :name="genre.name"
