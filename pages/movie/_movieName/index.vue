@@ -1,7 +1,7 @@
 <template>
   <div v-if="movieDetail">
     <section class="max-h-[450px] bg-opacity-45 bg-black relative overflow-hidden text-white">
-      <div class="absolute bottom-0 w-full">
+      <div class="absolute bottom-0 w-full z-10">
         <div class="w-full grid grid-cols-5 px-10">
           <div class="col-span-1"/>
           <div class="col-span-4 mb-6">
@@ -12,7 +12,7 @@
             </p>
           </div>
         </div>
-        <div class="bg-black h-20 w-full grid grid-cols-5 px-10">
+        <div class="bg-black bg-opacity-40 h-20 w-full grid grid-cols-5 px-10">
           <div class="col-span-1"/>
           <div class="flex col-span-4 py-5">
             <div class="flex gap-5 border-r-[1px] border-gray-300 pr-10">
@@ -45,6 +45,7 @@
         </div>
       </div>
       <img
+        class="opacity-50"
         :src="backdropPath"
         alt=""
       >
@@ -52,7 +53,7 @@
     <div class="bg-white">
       <div>
         <div class="grid grid-cols-5 px-10 relative">
-          <div class="col-span-1">
+          <div class="col-span-1 z-20">
             <img
               :src="imagePosterPath"
               alt=""
@@ -68,56 +69,24 @@
             </div>
           </div>
         </div>
-        <div class="flex flex-col justify-between pl-5">
-          <!-- <div>
-            <p class="text-lg">{{ movieYear }}</p>
-            <p class="text-4xl">{{ movieDetail.title }}</p>
-            <p class="text-sm">
-              {{ movieGenre }}
-            </p>
-          </div> -->
-          <!-- <div class="flex gap-5">
-            <div class="flex gap-5">
-              <div class="h-fit flex gap-3 my-auto">
-                <img class="w-5" src="../../../src/assets/icons/star2.svg" alt="">
-                <p class="text-4xl font-bold">{{ voteAverage }}</p>
-              </div>
-              <div class="text-xs my-auto">
-                <p class="uppercase">User Score</p>
-                <p class="uppercase">{{ `${movieDetail.vote_count} votes` }}</p>
-              </div>
-            </div>
-            <div class=" bg-gray-400 h-full w-[0.5px]"/>
-            <div class="text-xs my-auto">
-              <p class="uppercase">Status</p>
-              <p class="uppercase">{{ movieDetail.status }}</p>
-            </div>
-            <div class=" bg-gray-400 h-full w-[0.5px]"/>
-            <div class="text-xs my-auto">
-              <p class="uppercase">Language</p>
-              <p class="uppercase">{{ movieLang }}</p>
-            </div>
-            <div class=" bg-gray-400 h-full w-[0.5px]"/>
-            <div class="text-xs my-auto">
-              <p class="uppercase">Budget</p>
-              <p class="uppercase">{{ movieDetail.budget }}</p>
-            </div>
-            <div class=" bg-gray-400 h-full w-[0.5px]"/>
-            <div class="text-xs my-auto">
-              <p class="uppercase">Production</p>
-              <p class="uppercase">{{ movieProductionCompany }}</p>
-            </div>
-          </div> -->
-        </div>
       </div>
       <div class="mt-10 px-10">
         <p class="text-red-600 text-sm font-medium uppercase">Reviews</p>
-        <div class="grid grid-cols-2 gap-5 mt-5">
+        <div
+          v-if="movieReviews.length > 0"
+          class="grid grid-cols-2 gap-5 mt-5"
+        >
           <CardReview
             v-for="review in movieReviews"
             :key="review.id"
             :movie-review="review"
           />
+        </div>
+        <div
+          v-else
+          class="mt-5"
+        >
+          <p class="text-2xl font-bold text-black">No reviews available</p>
         </div>
       </div>
       <div class="bg-[#1E232B] py-10 px-16 mt-20">

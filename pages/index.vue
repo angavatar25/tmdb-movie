@@ -18,6 +18,7 @@
               'bg-red-600': currentButton === buttonText,
               'bg-[#21252B]': currentButton !== buttonText
             }"
+            @click="handleChangeBy(buttonText)"
             class="capitalize rounded-full p-2 h-fit text-sm"
           >
             {{ buttonText }}
@@ -77,7 +78,18 @@ export default {
       const movieNameSerialized = splitted.join('-');
 
       this.$router.push({ path: `/movie/${movieNameSerialized}`, query: { movieId } });
-    }
+    },
+    handleChangeBy(filter) {
+      this.currentButton = filter;
+
+      if (filter === 'popularity') {
+        this.$store.dispatch('movies/getMoviesByPopularity');
+
+        return;
+      }
+
+      this.$store.dispatch('movies/getMoviesByReleaseData');
+    },
   }
 }
 </script>

@@ -31,7 +31,10 @@
         No rating
       </div>
     </div>
-    <p v-html="movieReview.content" class=" italic text-[13px] mt-5"/>
+    <p
+      v-html="movieReview.content"
+      class="line-clamp-4 text-ellipsis italic text-[13px] mt-5"
+    />
   </div>
 </template>
 
@@ -65,3 +68,12 @@ export default {
   }
 }
 </script>
+
+<style>
+.line-clamp-4 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  -webkit-line-clamp: 8;
+}
+</style>

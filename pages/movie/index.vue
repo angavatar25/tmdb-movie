@@ -16,13 +16,19 @@
         />
         <button @click="checkGenre">Check</button>
       </div>
-      <div class="grid grid-cols-4 col-span-4 gap-5">
+      <div
+        v-if="movieList.length > 0"
+        class="grid grid-cols-4 col-span-4 gap-5"
+      >
         <MovieCardDiscover
           v-for="movie in movieList"
           :key="movie.id"
           :movie-detail="movie"
           @movie-card-action="redirectToMovieDetail"
         />
+      </div>
+      <div v-else>
+        <p>Loading...</p>
       </div>
     </div>
     <div class="grid grid-cols-5 mt-16">
