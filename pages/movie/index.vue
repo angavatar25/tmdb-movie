@@ -8,7 +8,10 @@
       <div>
         <MovieFilter
           :genre-list="movieGenres"
+          :current-sort="currentSort"
+          :current-sort-id="currentSortId"
           @input="loadMoviesWithGenre"
+          @handleCurrentSortOption="handleSort"
           v-model="genreOptions"
         />
         <button @click="checkGenre">Check</button>
@@ -52,6 +55,8 @@ export default {
       currentPage: 1,
       selectedOption: '',
       genreOptions: [],
+      currentSort: '',
+      currentSortId: '',
     }
   },
   mounted() {
@@ -59,12 +64,21 @@ export default {
       page: this.currentPage,
     };
 
+    if (this.genreId) {
+      this.genreOptions.push(this.genreId);
+
+      this.loadMoviesWithGenre();
+    }
+
     this.$store.dispatch('movies/getMovieGenre');
     this.$store.dispatch('movies/filteredMovie', payload);
   },
   computed: {
     movieList() {
       return this.$store.state.movies.movieListFiltered;
+    },
+    genreId() {
+      return this.$route.query.genreId;
     },
     movieGenres() {
       return this.$store.state.movies.movieGenres;
@@ -89,7 +103,11 @@ export default {
       };
 
       if (this.genreOptions.length > 0) {
-        Object.assign(payload, { with_genres: this.checkGenre() });
+        Object.assign(payload, { with_genres: this.checkGenre(this.genreOptions) });
+      }
+
+      if (this.currentSort) {
+        Object.assign(payload, { sort_by: this.currentSortId })
       }
 
       this.$store.dispatch('movies/filteredMovie', payload);
@@ -100,16 +118,30 @@ export default {
       };
 
       if (this.genreOptions.length > 0) {
-        Object.assign(payload, { with_genres: this.checkGenre() });
+        Object.assign(payload, { with_genres: this.checkGenre(this.genreOptions) });
+      }
+
+      if (this.currentSort) {
+        Object.assign(payload, { sort_by: this.currentSortId })
       }
 
       this.$store.dispatch('movies/filteredMovie', payload);
     },
-    checkGenre() {
-      const joined = this.genreOptions.join(',');
+    checkGenre(genre) {
+      const joined = genre.join(',');
 
       return joined;
     },
+    handleSort(sort) {
+      const { key, name } = sort;
+      
+      this.currentSort = name;
+      this.currentSortId = key;
+
+      this.currentPage = 1;
+
+      this.loadMoviesWithGenre();
+    }
   }
 }
 </script>

@@ -12,11 +12,12 @@
           <img class=" w-5" src="../src/assets/icons/iconfinder_view-grid_7122519 1.svg" alt="">
           Categories
         </div>
-        <div class="bg-white flex-col gap-4 absolute hidden group-hover:flex top-10 text-black w-full p-3 rounded-md shadow-md z-10">
+        <div class="bg-white flex-col gap-4 absolute hidden group-hover:flex top-6 text-black w-full p-3 rounded-md shadow-md z-10">
           <p
             v-for="genre in movieGenre"
             :key="genre.id"
             class="text-xs"
+            @click="goToMovieList(genre.id)"
           >
             {{ genre.name }}
           </p>
@@ -43,6 +44,9 @@ export default {
     },
     goToHomepage() {
       this.$router.push('/');
+    },
+    goToMovieList(genreId) {
+      this.$router.push({ path: '/movie', query: { genreId } })
     }
   },
   mounted() {

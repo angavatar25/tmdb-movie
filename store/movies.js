@@ -97,17 +97,14 @@ export const actions = {
     commit('SET_LOADING', true);
 
     try {
-      const { with_genres, page } = payload;
+      const { with_genres, page, sort_by } = payload;
 
       const res = await this.$axios.get('/3/discover/movie', {
         params: payload,
       });
   
       if (res && res.data && res.data.results) {
-        // if page is 1 and filtered with genres
-        // or with no genres
-        // show initial movies data
-        if ((page === 1 && with_genres) || !with_genres) {
+        if (page === 1) {
           commit('SET_IS_INITIAL', true);
         } else {
           commit('SET_IS_INITIAL', false);
