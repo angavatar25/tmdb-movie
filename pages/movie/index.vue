@@ -58,8 +58,12 @@ export default {
     }
   },
   methods: {
-    redirectToMovieDetail(movieId) {
-      this.$router.push({ path: `/movie/${movieId}`, query: { movieId } });
+    redirectToMovieDetail(movieData) {
+      const { movieId, movieName } = movieData;
+      const splitted = movieName.split(' ');
+      const movieNameSerialized = splitted.join('-');
+
+      this.$router.push({ path: `/movie/${movieNameSerialized}`, query: { movieId } });
     }
   }
 }
