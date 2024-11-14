@@ -6,7 +6,7 @@ const initialState = () => ({
   movieSearchRes: [],
   movieListFiltered: [],
   moreDataLoading: false,
-  filterWithGenre: false,
+  isInitial: false,
 });
 
 export const state = initialState;
@@ -37,12 +37,18 @@ export const mutations = {
     state.movieSearchRes = serializedSearchData.slice(0, 10);
   },
   SET_MOVIE_LIST_FILTERED(state, newMovies) {
-    state.movieListFiltered = [...state.movieListFiltered, ...newMovies];
+    if (state.isInitial) {
+      state.movieListFiltered = newMovies;
+    } else {
+      state.movieListFiltered = [...state.movieListFiltered, ...newMovies];
+    }
   },
   SET_LOADING(state, data) {
     state.moreDataLoading = data;
   },
-  SET_
+  SET_IS_INITIAL(state, data) {
+    state.isInitial = data;
+  }
 }
 
 export const actions = {
@@ -91,13 +97,22 @@ export const actions = {
     commit('SET_LOADING', true);
 
     try {
-      const { with_genres } = payload;
+      const { with_genres, page } = payload;
 
       const res = await this.$axios.get('/3/discover/movie', {
         params: payload,
       });
   
       if (res && res.data && res.data.results) {
+        // if page is 1 and filtered with genres
+        // or with no genres
+        // show initial movies data
+        if ((page === 1 && with_genres) || !with_genres) {
+          commit('SET_IS_INITIAL', true);
+        } else {
+          commit('SET_IS_INITIAL', false);
+        }
+
         commit('SET_MOVIE_LIST_FILTERED', res.data.results);
       }
     } catch (err) {

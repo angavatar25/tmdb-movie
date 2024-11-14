@@ -8,7 +8,7 @@
       <div>
         <MovieFilter
           :genre-list="movieGenres"
-          @input="loadMovies"
+          @input="loadMoviesWithGenre"
           v-model="genreOptions"
         />
         <button @click="checkGenre">Check</button>
@@ -55,8 +55,12 @@ export default {
     }
   },
   mounted() {
+    const payload = {
+      page: this.currentPage,
+    };
+
     this.$store.dispatch('movies/getMovieGenre');
-    this.$store.dispatch('movies/filteredMovie');
+    this.$store.dispatch('movies/filteredMovie', payload);
   },
   computed: {
     movieList() {
@@ -82,6 +86,17 @@ export default {
 
       const payload = {
         page: this.currentPage,
+      };
+
+      if (this.genreOptions.length > 0) {
+        Object.assign(payload, { with_genres: this.checkGenre() });
+      }
+
+      this.$store.dispatch('movies/filteredMovie', payload);
+    },
+    loadMoviesWithGenre() {
+      const payload = {
+        page: 1,
       };
 
       if (this.genreOptions.length > 0) {
