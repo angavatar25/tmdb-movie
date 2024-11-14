@@ -2,7 +2,7 @@
   <div class="bg-[#292E36] text-white">
     <NavBar/>
     <Nuxt />
-    <!-- <Footer/> -->
+    <Footer/>
   </div>
 </template>
 

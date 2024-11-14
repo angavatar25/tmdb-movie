@@ -26,9 +26,11 @@
         >
           <label :for="genre.name">{{ genre.name }}</label>
           <input
+            v-model="computedValue"
             type="checkbox"
             :name="genre.name"
-            :value="genre.name"
+            :value="genre.id"
+            @click="$emit('handleChangeGenre', genre.id)"
           >
         </div>
       </div>
@@ -42,6 +44,20 @@ export default {
     genreList: {
       type: Array,
       default: () => [],
+    },
+    value: {
+      type: Array,
+      default: () => [],
+    },
+  },
+  computed: {
+    computedValue: {
+      get() {
+        return this.value;
+      },
+      set(newValue) {
+        this.$emit('input', newValue);
+      }
     }
   }
 }
