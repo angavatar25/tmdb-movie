@@ -43,7 +43,6 @@ export default {
   },
   data() {
     return {
-      items: [1, 2, 3, 4, 5],
       currentIndex: 0,
       itemWidth: 600,
       gap: 0,
@@ -54,14 +53,14 @@ export default {
       if (this.currentIndex < this.items.length - 1) {
         this.currentIndex += 1;
       } else {
-        this.currentIndex = 0; // Loop back to the first item
+        this.currentIndex = 0;
       }
     },
     prev() {
       if (this.currentIndex > 0) {
         this.currentIndex -= 1;
       } else {
-        this.currentIndex = this.items.length - 1; // Loop to the last item
+        this.currentIndex = this.items.length - 1;
       }
     },
     goTo(index) {

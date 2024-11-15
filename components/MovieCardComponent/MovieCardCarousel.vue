@@ -77,6 +77,6 @@ export default {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  -webkit-line-clamp: 4; /* Limits to 4 lines */
+  -webkit-line-clamp: 4;
 }
 </style>
