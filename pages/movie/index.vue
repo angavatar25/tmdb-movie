@@ -14,7 +14,6 @@
           @handleCurrentSortOption="handleSort"
           v-model="genreOptions"
         />
-        <button @click="checkGenre">Check</button>
       </div>
       <div
         v-if="movieList.length > 0"

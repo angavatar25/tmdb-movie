@@ -31,15 +31,37 @@
             </div>
             <div class="text-xs flex flex-col justify-center border-r-[1px] border-gray-300 px-10">
               <p class="uppercase">Language</p>
-              <p class="uppercase">{{ movieLang }}</p>
+              <p
+                v-if="movieLang" 
+                class="uppercase"
+              >
+                {{ movieLang }}
+              </p>
+              <p
+                v-else
+                class="uppercase"
+              >
+                -
+              </p>
             </div>
             <div class="text-xs flex flex-col justify-center border-r-[1px] border-gray-300 px-10">
               <p class="uppercase">Budget</p>
-              <p class="uppercase">{{ movieDetail.budget }}</p>
+              <p class="uppercase">{{ formatterUSDollar(movieDetail.budget) }}</p>
             </div>
             <div class="text-xs flex flex-col justify-center border-r-[1px] border-gray-300 px-10">
               <p class="uppercase">Production</p>
-              <p class="uppercase">{{ movieProductionCompany }}</p>
+              <p
+                v-if="movieProductionCompany"
+                class="uppercase"
+              >
+                {{ movieProductionCompany }}
+              </p>
+              <p
+                v-else
+                class="uppercase"
+              >
+                -
+              </p>
             </div>
           </div>
         </div>
@@ -53,12 +75,19 @@
     <div class="bg-white">
       <div>
         <div class="grid grid-cols-5 px-10 relative">
-          <div class="col-span-1 z-20">
+          <div class="col-span-1 z-10">
             <img
+              v-if="this.movieDetail.poster_path"
               :src="imagePosterPath"
               alt=""
               class="max-w-56 shadow-md absolute bottom-0"
             >
+            <div
+              v-else
+              class="max-w-56 w-full z-0 bg-gray-500 max-h-[380px] h-full"
+            >
+
+            </div>
           </div>
           <div class="col-span-4 mt-5 leading-[10]">
             <div>
@@ -100,6 +129,9 @@
         </div>
       </div>
     </div>
+  </div>
+  <div v-else>
+    <p>Loading...</p>
   </div>
 </template>
 
@@ -161,18 +193,28 @@ export default {
       return null;
     },
     movieLang() {
-      if (this.movieDetail && this.movieDetail.spoken_languages) {
-        const [first] = this.$store.state.movies.movieDetail.spoken_languages;
+      if (this.movieDetail
+        && Array.isArray(this.movieDetail.spoken_languages)
+        && this.movieDetail.spoken_languages.length > 0
+      ) {
+        const [first] = this.movieDetail.spoken_languages;
 
         return first.name;
       }
+
+      return null;
     },
     movieProductionCompany() {
-      if (this.movieDetail && this.movieDetail.production_companies) {
-        const [first] = this.$store.state.movies.movieDetail.production_companies;
+      if (this.movieDetail
+        && Array.isArray(this.movieDetail.production_companies)
+        && this.movieDetail.production_companies.length > 0
+      ) {
+        const [first] = this.movieDetail.production_companies;
 
         return first.name;
       }
+
+      return null;
     },
     imagePosterPath() {
       const posterPath = "https://image.tmdb.org/t/p/original";
@@ -184,6 +226,16 @@ export default {
 
       return `${posterPath}/${this.movieDetail.backdrop_path}`
     },
+  },
+  methods: {
+    formatterUSDollar(amount) {
+      let currency = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+      });
+
+      return currency.format(amount);
+    }
   }
 }
 </script>

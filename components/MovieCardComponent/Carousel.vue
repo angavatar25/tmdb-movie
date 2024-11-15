@@ -46,7 +46,7 @@ export default {
       items: [1, 2, 3, 4, 5],
       currentIndex: 0,
       itemWidth: 600,
-      gap: 20,
+      gap: 0,
     };
   },
   methods: {
@@ -88,6 +88,7 @@ export default {
 .carousel-item {
   @apply max-w-[600px] w-full opacity-50 text-white text-2xl flex justify-center items-center shrink-0;
   margin: 0 10px;
+  transition: transform 0.5s, opacity 0.5s;
 }
 
 .carousel-item.active {
