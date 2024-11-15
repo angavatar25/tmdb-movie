@@ -6,7 +6,7 @@
     }"
     :style="{ transform: `translateX(${translateXValue}px)` }"
   >
-    <div class=" w-60">
+    <div class="w-60">
       <img
         :src="imagePosterPath"
         alt=""

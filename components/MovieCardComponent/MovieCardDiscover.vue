@@ -1,15 +1,22 @@
 <template>
-  <div class="max-w-72 relative">
+  <div class="max-w-72 relative max-h-[500px] h-full mb-5">
     <p class="bg-black absolute z-10 w-fit p-2 right-0 top-0 bg-opacity-50">
       {{ voteAverage }}
     </p>
-    <div class="relative group">
+    <div class="relative group max-w-70 max-h-[380px] h-full overflow-hidden w-full">
       <img
-        class="group"
+        v-if="this.movieDetail.poster_path"
+        class="group overflow-hidden"
         :src="imagePosterPath"
         alt=""
       >
-      <div class="bg-black bg-opacity-70 z-20 w-full h-full absolute top-0 left-0 hidden group-hover:flex flex-col justify-between items-center py-40">
+      <div
+        v-else
+        class="w-full bg-gray-500 h-full overflow-hidden flex justify-center items-center"
+      >
+        No Image
+      </div>
+      <div class="bg-black bg-opacity-70 z-10 w-full h-full absolute top-0 left-0 hidden group-hover:flex flex-col justify-between items-center py-32">
         <div class="flex gap-3">
           <img src="../../src/assets/icons/star2.svg" alt="">
           <p class="text-2xl font-medium">{{ voteAverage }}</p>

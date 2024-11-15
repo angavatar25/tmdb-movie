@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar">
+  <nav class="navbar z-30">
     <img
       class="cursor-pointer"
       @click="goToHomepage"
