@@ -43,7 +43,6 @@ export default {
   },
   data() {
     return {
-      items: [1, 2, 3, 4, 5],
       currentIndex: 0,
       itemWidth: 600,
       gap: 0,
