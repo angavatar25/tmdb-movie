@@ -1,6 +1,10 @@
 <template>
   <div v-if="movieDetail">
-    <section class="max-h-[450px] bg-opacity-45 bg-black relative overflow-hidden text-white">
+    <section
+      :class="{
+        'h-[450px]': !this.movieDetail.backdrop_path,
+      }"
+      class="max-h-[450px] h-full bg-opacity-45 bg-black relative overflow-hidden text-white">
       <div class="absolute bottom-0 w-full z-10">
         <div class="w-full grid grid-cols-5 px-10">
           <div class="col-span-1"/>
@@ -67,10 +71,15 @@
         </div>
       </div>
       <img
+        v-if="this.movieDetail.backdrop_path"
         class="opacity-50"
         :src="backdropPath"
         alt=""
       >
+      <div
+        v-else
+        class="h-full w-full bg-gray-500"
+      />
     </section>
     <div class="bg-white">
       <div>
@@ -82,18 +91,21 @@
               alt=""
               class="max-w-56 shadow-md absolute bottom-0"
             >
-            <div
-              v-else
-              class="max-w-56 w-full z-0 bg-gray-500 max-h-[380px] h-full"
-            >
-
-            </div>
           </div>
           <div class="col-span-4 mt-5 leading-[10]">
             <div>
               <p class=" text-red-600 uppercase text-sm font-semibold">Overview</p>
-              <p class="text-black leading-6 mt-2 max-w-[526px] text-sm">
+              <p
+                v-if="movieDetail.overview"
+                class="text-black leading-6 mt-2 max-w-[526px] text-sm"
+              >
                 {{ movieDetail.overview }}
+              </p>
+              <p
+                v-else
+                class="text-black leading-6 mt-2 max-w-[526px] text-sm"
+              >
+                No movie overview
               </p>
             </div>
           </div>
