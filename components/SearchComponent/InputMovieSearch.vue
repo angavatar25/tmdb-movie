@@ -15,7 +15,7 @@
     </div>
     <div
       v-if="searchResult.length > 0 && showSearchResult"
-      class="search-result-dropdown flex flex-col gap-4 w-full absolute bg-black text-white p-3 rounded-b-md"
+      class="search-result-dropdown flex flex-col gap-4 w-full absolute bg-black bg-opacity-90 text-white p-3 rounded-b-md"
     >
       <p
         v-for="res in searchResult"

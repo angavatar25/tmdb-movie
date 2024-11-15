@@ -6,9 +6,9 @@
       <div class="relative">
         <div
           @click="handleSortByDropdown"
-          class="w-full bg-[#2F363F] p-3 rounded-md flex justify-between"
+          class="w-full cursor-pointer bg-[#2F363F] p-3 rounded-md flex justify-between"
         >
-          <p>{{ currentSort ? currentSort : 'Popularity' }}</p>
+          <p class="cursor-pointer">{{ currentSort ? currentSort : 'Popularity' }}</p>
           <img
             :class="{
               'rotate-180': showSortByDropdown,
@@ -23,6 +23,7 @@
         >
           <p
             v-for="sort in sortOptions"
+            class="cursor-pointer"
             :key="`sort-${sort.id}`"
             @click="handleCurrentSortOption(sort)"
           >

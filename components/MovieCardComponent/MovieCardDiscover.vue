@@ -1,6 +1,6 @@
 <template>
-  <div class="max-w-72">
-    <p class="bg-black absolute w-fit p-2 right-0 top-0 bg-opacity-50">
+  <div class="max-w-72 relative">
+    <p class="bg-black absolute z-10 w-fit p-2 right-0 top-0 bg-opacity-50">
       {{ voteAverage }}
     </p>
     <div class="relative group">
@@ -9,7 +9,7 @@
         :src="imagePosterPath"
         alt=""
       >
-      <div class="bg-black bg-opacity-70 z-10 w-full h-full absolute top-0 left-0 hidden group-hover:flex flex-col justify-between items-center py-40">
+      <div class="bg-black bg-opacity-70 z-20 w-full h-full absolute top-0 left-0 hidden group-hover:flex flex-col justify-between items-center py-40">
         <div class="flex gap-3">
           <img src="../../src/assets/icons/star2.svg" alt="">
           <p class="text-2xl font-medium">{{ voteAverage }}</p>

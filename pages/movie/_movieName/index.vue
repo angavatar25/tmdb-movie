@@ -35,7 +35,7 @@
             </div>
             <div class="text-xs flex flex-col justify-center border-r-[1px] border-gray-300 px-10">
               <p class="uppercase">Budget</p>
-              <p class="uppercase">{{ movieDetail.budget }}</p>
+              <p class="uppercase">{{ formatterUSDollar(movieDetail.budget) }}</p>
             </div>
             <div class="text-xs flex flex-col justify-center border-r-[1px] border-gray-300 px-10">
               <p class="uppercase">Production</p>
@@ -100,6 +100,9 @@
         </div>
       </div>
     </div>
+  </div>
+  <div v-else>
+    <p>Loading...</p>
   </div>
 </template>
 
@@ -184,6 +187,16 @@ export default {
 
       return `${posterPath}/${this.movieDetail.backdrop_path}`
     },
+  },
+  methods: {
+    formatterUSDollar(amount) {
+      let currency = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+      });
+
+      return currency.format(amount);
+    }
   }
 }
 </script>

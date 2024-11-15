@@ -1,6 +1,7 @@
 <template>
   <nav class="navbar">
     <img
+      class="cursor-pointer"
       @click="goToHomepage"
       src="../src/assets/images/MoovieTime-Logo.svg"
       alt=""
@@ -16,14 +17,14 @@
           <p
             v-for="genre in movieGenre"
             :key="genre.id"
-            class="text-xs"
+            class="text-xs cursor-pointer"
             @click="goToMovieListWithGenre(genre.id)"
           >
             {{ genre.name }}
           </p>
         </div>
       </div>
-      <p @click="goToMovieList">Movies</p>
+      <p class="cursor-pointer" @click="goToMovieList">Movies</p>
       <p>TV Shows</p>
       <p>Login</p>
     </div>
